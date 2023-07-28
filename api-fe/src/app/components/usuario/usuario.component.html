@@ -1,0 +1,19 @@
+<table class="table">
+  <thead class="thread">
+    <th scope="col">Id</th>
+    <th scope="col">Nome</th>
+    <th scope="col">Cpf</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of students">
+      <td>{{ student.id }}</td>
+      <td>{{ student.nome }}</td>
+      <td>{{ student.cpf }}</td>
+      <td>
+        <button (click)="deleteUsuario(student.id)" class="btn btn-primary">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
