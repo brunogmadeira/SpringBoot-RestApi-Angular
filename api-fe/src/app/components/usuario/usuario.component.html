@@ -1,8 +1,33 @@
-<table class="table">
+<form class="form-inline">
+  <div class="form-group mx-sm-3 mb-2">
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="busca"
+      id="nome"
+      name="nome"
+      placeholder="Pesquisa por Nome"
+    />
+  </div>
+  <button type="submit" (click)="consultarUser()" class="btn btn-primary mb-2">
+    Buscar
+  </button>
+  <button
+    type="button"
+    [routerLink]="['/usuarioAdd']"
+    style="margin-left: 5px"
+    class="btn btn-success mb-2"
+  >
+    Novo
+  </button>
+</form>
+<table class="table table-hover">
   <thead class="thread">
     <th scope="col">Id</th>
     <th scope="col">Nome</th>
     <th scope="col">Cpf</th>
+    <th></th>
+    <th></th>
   </thead>
   <tbody>
     <tr *ngFor="let student of students">
@@ -12,6 +37,14 @@
       <td>
         <button (click)="deleteUsuario(student.id)" class="btn btn-primary">
           Delete
+        </button>
+      </td>
+      <td>
+        <button
+          [routerLink]="['/usuarioAdd', student.id]"
+          class="btn btn-warning"
+        >
+          Editar
         </button>
       </td>
     </tr>

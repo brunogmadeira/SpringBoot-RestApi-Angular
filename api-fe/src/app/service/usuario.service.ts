@@ -12,9 +12,19 @@ export class UsuarioService {
   getStudentList(): Observable<any> {
     return this.http.get<any>(AppConstants.baseUrl);
   }
+
+  getStudent(id: Number): Observable<any> {
+    return this.http.get<any>(AppConstants.baseUrl + id);
+  }
+
   deletarUsuario(id: Number): Observable<any> {
     return this.http.delete(AppConstants.baseUrl + id, {
       responseType: 'text',
     });
   }
+  consultarUser(busca: String): Observable<any> {
+    return this.http.get(AppConstants.baseUrl + 'usuarioBusca/' + busca);
+  }
 }
+
+/* http://localhost:8082/http://localhost:8082/api-be/usuario/usuarioBusca/bruno */

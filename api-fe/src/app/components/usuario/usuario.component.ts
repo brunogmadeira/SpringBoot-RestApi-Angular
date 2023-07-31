@@ -11,18 +11,29 @@ import { UsuarioService } from 'src/app/service/usuario.service';
 })
 export class UsuarioComponent implements OnInit {
   students: Array<User> = [];
+  busca!: String;
 
   constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit() {
+    this.listaUsuarios();
+  }
+
+  deleteUsuario(id: Number) {
+    this.usuarioService.deletarUsuario(id).subscribe((resposta) => {
+      console.log('Retorno do método delete : ' + resposta);
+      this.listaUsuarios();
+    });
+  }
+
+  listaUsuarios() {
     this.usuarioService.getStudentList().subscribe((resposta: any) => {
       this.students = resposta;
     });
   }
-
-  deleteUsuario(id: Number) {
-    this.usuarioService.deletarUsuario(id).subscribe((data) => {
-      console.log('Retorno do método delete : ' + data);
+  consultarUser() {
+    this.usuarioService.consultarUser(this.busca).subscribe((resposta: any) => {
+      this.students = resposta;
     });
   }
 }

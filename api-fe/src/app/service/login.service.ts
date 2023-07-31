@@ -16,7 +16,6 @@ export class LoginServiceService {
       .subscribe(
         (data) => {
           /*Retorno HTTP*/
-          alert('caiuaqui');
           var token = JSON.parse(JSON.stringify(data)).Authorization.split(
             ' '
           )[1];
@@ -28,7 +27,7 @@ export class LoginServiceService {
         },
         (error) => {
           console.error('Login negado');
-          alert('negado');
+          alert('Negado');
         }
       );
   }

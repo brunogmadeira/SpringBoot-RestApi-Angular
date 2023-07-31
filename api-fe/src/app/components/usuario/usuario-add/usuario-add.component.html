@@ -1,0 +1,82 @@
+<h3 style="padding: 10px">Tela de usuario</h3>
+<form style="padding: 10px">
+  <div class="form-row">
+    <div class="form group col-md-12">
+      <label for="id">Id</label>
+      <input
+        type="text"
+        [(ngModel)]="usuario.id"
+        class="form-control"
+        id="id"
+        name="Id"
+        readonly="true"
+        autocomplete="false"
+      />
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <label for="nome">Nome</label>
+      <input
+        type="text"
+        [(ngModel)]="usuario.nome"
+        class="form-control"
+        id="nome"
+        required="true"
+        name="nome"
+        autocomplete="false"
+      />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="login">Email ou Login</label>
+      <input
+        type="text"
+        [(ngModel)]="usuario.login"
+        class="form-control"
+        id="login"
+        name="login"
+        required="true"
+        autocomplete="false"
+      />
+    </div>
+
+    <div class="form-group col-md-6">
+      <label for="login">Senha</label>
+      <input
+        type="password"
+        [(ngModel)]="usuario.senha"
+        class="form-control"
+        id="senha"
+        name="senha"
+        required="true"
+        autocomplete="false"
+      />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-grop col-md-3">
+      <label for="cpf">CPF</label>
+      <input
+        type="text"
+        [(ngModel)]="usuario.cpf"
+        class="form-control"
+        id="cpf"
+        name="cpf"
+        required="true"
+        autocomplete="false"
+      />
+    </div>
+  </div>
+  <div class="form-row mt-3">
+    <div class="form-group col-md-6">
+      <button type="button" class="btn btn-danger" (click)="voltar()">
+        Voltar
+      </button>
+      <button type="button" class="btn btn-primary ml-1">Novo</button>
+      <button type="button" class="btn btn-secondary ml-1">Salvar</button>
+    </div>
+  </div>
+</form>

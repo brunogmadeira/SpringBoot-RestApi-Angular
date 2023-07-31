@@ -21,11 +21,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	@Query("SELECT u FROM Usuario u WHERE u.login = ?1")
 	Usuario findUserByLogin(String login);
 	
-	@Query("SELECT u FROM Usuario u WHERE u.id = ?1")
-	Usuario findUserById(Long id);
+	//@Query("SELECT u FROM Usuario u WHERE u.id = ?1")
+	//Usuario findUserById(Long id);
 	
-	//@Query("SELECT u FROM Usuario u WHERE u.nome LIKE %?1%")
-	//List<Usuario> findUserByBusca(String busca);
+	@Query("SELECT u FROM Usuario u WHERE u.nome LIKE %?1%")
+	List<Usuario> findUserByBusca(String busca);
 	
 	public default Page<Usuario> findUserByBuscaPage(String busca, Pageable pageable) {
 		Usuario usuario = new Usuario();

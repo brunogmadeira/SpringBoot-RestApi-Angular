@@ -57,7 +57,7 @@ public class IndexController {
 	
 	//Consulta todos os users
 	@GetMapping(value = "/", produces = "application/json")
-	@CacheEvict(value = "cacheusuarios", allEntries = true)
+	//@CacheEvict(value = "cacheusuarios", allEntries = true)
 	@CachePut("cacheusuarios")
 	public ResponseEntity<List<Usuario>> usuario() throws InterruptedException {
 		
@@ -84,9 +84,11 @@ public class IndexController {
 	@GetMapping(value = "/usuarioBusca/{busca}", produces = "application/json")
 	@CacheEvict(value = "cacheusuarios", allEntries = true)
 	@CachePut("cacheusuarios")
-	public ResponseEntity<Page<Usuario>> usuarioNome(@PathVariable("busca") String busca) throws InterruptedException {
-		
-		Page<Usuario> list = null;
+	public ResponseEntity<List<Usuario>> consultarUser(@PathVariable("busca") String busca) throws InterruptedException {
+		System.out.println(busca);
+		List<Usuario> list = usuarioRp.findUserByBusca(busca);
+		return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
+		/*Page<Usuario> list = null;
 		Pageable pageable = null;
 		busca = CaracterUtil.buscaContexto(busca);
 		if (busca.equals("")) {
@@ -97,8 +99,8 @@ public class IndexController {
 			list = usuarioRp.findUserByBuscaPage(busca, pageable);
 		}
 		
-	
 		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
+		*/
 	}
 	
 	
@@ -158,12 +160,12 @@ public class IndexController {
 			usuario.getListTelefones().get(pos).setUsuario(usuario);
 		}
 		
-		Usuario userTemporario = usuarioRp.findUserById(usuario.getId());
+		//Usuario userTemporario = usuarioRp.findUserById(usuario.getId());
 		
-		if (!userTemporario.getSenha().equals(usuario.getSenha())) { // Senhas diferentes
-			String senhacriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
-			usuario.setSenha(senhacriptografada);
-		}
+		//if (!userTemporario.getSenha().equals(usuario.getSenha())) { // Senhas diferentes
+		//	String senhacriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
+		//	usuario.setSenha(senhacriptografada);
+		//}
 		
 		Usuario usuarioatualiza = usuarioRp.save(usuario);
 		
