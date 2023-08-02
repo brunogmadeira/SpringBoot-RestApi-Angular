@@ -1,5 +1,5 @@
 <h3 style="padding: 10px">Tela de usuario</h3>
-<form style="padding: 10px">
+<form style="padding: 10px" #formValidate="ngForm">
   <div class="form-row">
     <div class="form group col-md-12">
       <label for="id">Id</label>
@@ -18,9 +18,13 @@
   <div class="form-row">
     <div class="form-group col-md-12">
       <label for="nome">Nome</label>
+      <span style="color: red; font-size: 23px" *ngIf="nomeValidate.invalid"
+        >*</span
+      >
       <input
         type="text"
         [(ngModel)]="usuario.nome"
+        #nomeValidate="ngModel"
         class="form-control"
         id="nome"
         required="true"
@@ -32,9 +36,13 @@
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="login">Email ou Login</label>
+      <span style="color: red; font-size: 23px" *ngIf="loginValidate.invalid"
+        >*</span
+      >
       <input
         type="text"
         [(ngModel)]="usuario.login"
+        #loginValidate="ngModel"
         class="form-control"
         id="login"
         name="login"
@@ -45,9 +53,13 @@
 
     <div class="form-group col-md-6">
       <label for="login">Senha</label>
+      <span style="color: red; font-size: 23px" *ngIf="senhaValidate.invalid"
+        >*</span
+      >
       <input
         type="password"
         [(ngModel)]="usuario.senha"
+        #senhaValidate="ngModel"
         class="form-control"
         id="senha"
         name="senha"
@@ -59,9 +71,13 @@
   <div class="form-row">
     <div class="form-grop col-md-3">
       <label for="cpf">CPF</label>
+      <span style="color: red; font-size: 23px" *ngIf="cpfValidate.invalid"
+        >*</span
+      >
       <input
         type="text"
         [(ngModel)]="usuario.cpf"
+        #cpfValidate="ngModel"
         class="form-control"
         id="cpf"
         name="cpf"
@@ -75,8 +91,17 @@
       <button type="button" class="btn btn-danger" (click)="voltar()">
         Voltar
       </button>
-      <button type="button" class="btn btn-primary ml-1">Novo</button>
-      <button type="button" class="btn btn-secondary ml-1">Salvar</button>
+      <button type="button" class="btn btn-primary ml-1" (click)="novo()">
+        Novo
+      </button>
+      <button
+        type="button"
+        class="btn btn-secondary ml-1"
+        [disabled]="formValidate.invalid"
+        (click)="salvaUser()"
+      >
+        Salvar
+      </button>
     </div>
   </div>
 </form>

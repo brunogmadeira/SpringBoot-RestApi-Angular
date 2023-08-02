@@ -26,11 +26,34 @@ export class UsuarioAddComponent implements OnInit {
       this.userService.getStudent(id).subscribe((resposta: any) => {
         this.usuario = resposta;
       });
-      console.log('Valor sendo editado: ' + id);
     }
   }
 
   voltar() {
     window.location.href = '/usuarioList';
+  }
+
+  salvaUser() {
+    if (this.usuario.id != null && this.usuario.id.toString().trim() != null) {
+      /*Atualzando ou editando*/
+      this.userService
+        .udpateUsuario(this.usuario)
+        .subscribe((resposta: any) => {
+          console.info('User atualizado: ' + resposta);
+          this.voltar();
+        });
+    } else {
+      this.userService
+        .salvarUsuario(this.usuario)
+        .subscribe((resposta: any) => {
+          this.novo;
+          console.info('Gravou user:' + resposta);
+          this.voltar();
+        });
+    }
+  }
+
+  novo() {
+    this.usuario = new User();
   }
 }

@@ -3,13 +3,14 @@
     <fullyQualifiedTypeName name="org.springframework.security.crypto.bcrypt.BCrypt"/>
     <fullyQualifiedTypeName name="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
     <fullyQualifiedTypeName name="com.midas.api.security.JWTApiAutenticacaoFilter"/>
-    <fullyQualifiedTypeName name="com.midas.api.repository.UsuarioRepository"/>
     <fullyQualifiedTypeName name="org.springframework.context.ApplicationContextException"/>
     <fullyQualifiedTypeName name="com.midas.api.ApplicationContextLoad"/>
-    <fullyQualifiedTypeName name="com.midas.api.model.Usuario"/>
     <fullyQualifiedTypeName name="com.midas.api.service.ImplementacaoUserDetailsService"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
     <fullyQualifiedTypeName name="org.springframework.cache.annotation.Cacheable"/>
-    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="com.midas.api.repository.UsuarioRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.http.ResponseEntity"/>
+    <fullyQualifiedTypeName name="com.midas.api.model.Usuario"/>
 </qualifiedTypeNameHistroy>

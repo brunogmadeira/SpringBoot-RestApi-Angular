@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TestabilityRegistry } from '@angular/core';
 import { LoginServiceService } from './service/login.service';
 import { Router } from '@angular/router';
 
@@ -18,5 +18,15 @@ export class AppComponent implements OnInit {
   public sair() {
     localStorage.clear;
     this.router.navigate(['login']);
+  }
+  public esconderBarra() {
+    if (
+      localStorage.getItem('token') !== null &&
+      localStorage.getItem('token')?.toString().trim() !== null
+    ) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

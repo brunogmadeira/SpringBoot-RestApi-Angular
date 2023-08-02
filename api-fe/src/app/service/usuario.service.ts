@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConstants } from '../app-constants';
+import { User } from '../model/user';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,22 @@ export class UsuarioService {
   }
   consultarUser(busca: String): Observable<any> {
     return this.http.get(AppConstants.baseUrl + 'usuarioBusca/' + busca);
+  }
+  salvarUsuario(user: User): Observable<any> {
+    return this.http.post<any>(AppConstants.baseUrl, user);
+  }
+  udpateUsuario(user: User): Observable<any> {
+    return this.http.put<any>(AppConstants.baseUrl, user);
+  }
+  userAutenticado() {
+    if (
+      localStorage.getItem('token') !== null &&
+      localStorage.getItem('token')?.toString().trim() !== null
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 
