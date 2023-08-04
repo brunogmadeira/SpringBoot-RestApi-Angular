@@ -10,6 +10,7 @@ import { HttpInterceptorMoodule } from './service/header-intercepctor.service';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuarioAddComponent } from './components/usuario/usuario-add/usuario-add.component';
 import { GuardiaoGuard } from './service/guardiao.guard';
+import { Telefone } from './model/telefone';
 
 export const appRouters: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [GuardiaoGuard] },

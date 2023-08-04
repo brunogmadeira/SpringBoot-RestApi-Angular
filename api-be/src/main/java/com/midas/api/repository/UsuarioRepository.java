@@ -27,6 +27,20 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	@Query("SELECT u FROM Usuario u WHERE u.nome LIKE %?1%")
 	List<Usuario> findUserByBusca(String busca);
 	
+	@Query(value="INSERT INTO curso_apirest.usuarios_role (usuario_id, role_id) VALUES (2, (SELECT id FROM curso_apirest.role WHERE role = 'ROLE_USER'))", nativeQuery = true)
+	String consultaConstraintRole();
+	
+	@Modifying
+	@Query(value="ALTER TABLE curso_apirest.usuarios_role DROP FOREIGN KEY ?1", nativeQuery = true)
+	void removerConstraintRole(String constraint);
+	
+	
+	@Transactional
+	@Modifying
+	@Query(nativeQuery = true, value = "INSERT INTO curso_apirest.usuarios_role (usuario_id, role_id) VALUES (?1, (SELECT id FROM curso_apirest.role WHERE role = 'ROLE_USER'))")
+	void insereAcessoRolePadrao(Long idUser);
+	
+	
 	public default Page<Usuario> findUserByBuscaPage(String busca, Pageable pageable) {
 		Usuario usuario = new Usuario();
 		usuario.setNome(busca);

@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 import com.midas.api.model.Usuario;
 import com.midas.api.repository.TelefoneRepository;
 import com.midas.api.repository.UsuarioRepository;
+import com.midas.api.service.ImplementacaoUserDetailsService;
 import com.midas.api.util.CaracterUtil;
 
 @RestController // Arquitetura REST
@@ -42,7 +43,12 @@ public class IndexController {
 	private UsuarioRepository usuarioRp;
 	
 	@Autowired
+	private ImplementacaoUserDetailsService implementacaoUserDetailsService;
+	
+	@Autowired
 	private TelefoneRepository telefoneRp;
+	
+	
 	
 	// METODO GET #################################################################################
 	
@@ -115,7 +121,7 @@ public class IndexController {
 			usuario.getListTelefones().get(pos).setUsuario(usuario);
 		}
 		
-		if(usuario.getCep() != null) {
+	/*	if(usuario.getCep() != null) {
 			// consumindo API externa
 			URL url = new URL("https://viacep.com.br/ws/" + usuario.getCep() +"/json/");
 			URLConnection connection = url.openConnection();
@@ -140,12 +146,14 @@ public class IndexController {
 			usuario.setUf(userAux.getUf());
 			
 			// consumindo API externa - fim		
-		}
+		}*/
 		
 		String senhacrypt = new BCryptPasswordEncoder().encode(usuario.getSenha());
 		usuario.setSenha(senhacrypt);
 		
 		Usuario usuariosalvo = usuarioRp.save(usuario);
+		
+		implementacaoUserDetailsService.insereAcessoPadrao(usuariosalvo.getId());
 		
 		return new ResponseEntity<Usuario>(usuariosalvo, HttpStatus.OK);
 	}
@@ -168,6 +176,7 @@ public class IndexController {
 		//}
 		
 		Usuario usuarioatualiza = usuarioRp.save(usuario);
+		
 		
 		return new ResponseEntity<Usuario>(usuarioatualiza, HttpStatus.OK);
 	}
