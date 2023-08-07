@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.midas.api.model.Telefone;
 import com.midas.api.model.Usuario;
 import com.midas.api.repository.TelefoneRepository;
 import com.midas.api.repository.UsuarioRepository;
@@ -56,9 +57,9 @@ public class IndexController {
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<Usuario> init(@PathVariable(value="id") Long id) {
 		
-		Optional<Usuario> usuario = usuarioRp.findById(id);
+		Usuario usuario = usuarioRp.findById(id).get();
 		
-		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
+		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
 	}
 	
 	//Consulta todos os users
@@ -71,6 +72,14 @@ public class IndexController {
 		
 			
 		return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
+	}
+	
+	//Consulta todos os users
+	@GetMapping(value = "/telefones/id/{id}", produces = "application/json")
+	public ResponseEntity<List<Telefone>> telefones(@PathVariable("id") Long id) {
+		List<Telefone> list = telefoneRp.findAllByUsuario(id);
+		
+		return new ResponseEntity<List<Telefone>>(list, HttpStatus.OK);
 	}
 
 	// Consulta todos os users
@@ -91,7 +100,6 @@ public class IndexController {
 	@CacheEvict(value = "cacheusuarios", allEntries = true)
 	@CachePut("cacheusuarios")
 	public ResponseEntity<List<Usuario>> consultarUser(@PathVariable("busca") String busca) throws InterruptedException {
-		System.out.println(busca);
 		List<Usuario> list = usuarioRp.findUserByBusca(busca);
 		return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
 		/*Page<Usuario> list = null;

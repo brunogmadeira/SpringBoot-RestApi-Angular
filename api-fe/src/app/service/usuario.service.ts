@@ -14,6 +14,10 @@ export class UsuarioService {
     return this.http.get<any>(AppConstants.baseUrl);
   }
 
+  getTelefonesList(id: number): Observable<any> {
+    return this.http.get<any>(AppConstants.baseUrl + 'telefones/id/' + id);
+  }
+
   getStudent(id: Number): Observable<any> {
     return this.http.get<any>(AppConstants.baseUrl + id);
   }

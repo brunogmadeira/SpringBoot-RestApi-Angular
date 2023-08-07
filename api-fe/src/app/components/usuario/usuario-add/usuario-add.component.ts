@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { User } from 'src/app/model/user';
+import { Telefone } from 'src/app/model/telefone';
 
 @Component({
   selector: 'app-usuario-add',
@@ -10,6 +11,7 @@ import { User } from 'src/app/model/user';
 })
 export class UsuarioAddComponent implements OnInit {
   usuario = new User();
+  listasTelefones: Array<Telefone> = [];
 
   constructor(
     private routeActive: ActivatedRoute,
@@ -25,8 +27,15 @@ export class UsuarioAddComponent implements OnInit {
     if (id != null) {
       this.userService.getStudent(id).subscribe((resposta: any) => {
         this.usuario = resposta;
+        this.listaTelefone(resposta.id);
       });
     }
+  }
+
+  listaTelefone(id: number) {
+    this.userService.getTelefonesList(id).subscribe((resposta: any) => {
+      this.listasTelefones = resposta;
+    });
   }
 
   voltar() {
@@ -41,6 +50,7 @@ export class UsuarioAddComponent implements OnInit {
         .subscribe((resposta: any) => {
           console.info('User atualizado: ' + resposta);
           this.voltar();
+          window.open('/home');
         });
     } else {
       this.userService
