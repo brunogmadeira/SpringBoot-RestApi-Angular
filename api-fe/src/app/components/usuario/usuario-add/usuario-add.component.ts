@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UsuarioService } from 'src/app/service/usuario.service';
 import { User } from 'src/app/model/user';
 import { Telefone } from 'src/app/model/telefone';
+import { identifierName } from '@angular/compiler';
 
 @Component({
   selector: 'app-usuario-add',
@@ -12,6 +13,7 @@ import { Telefone } from 'src/app/model/telefone';
 export class UsuarioAddComponent implements OnInit {
   usuario = new User();
   listasTelefones: Array<Telefone> = [];
+  telefone = new Telefone();
 
   constructor(
     private routeActive: ActivatedRoute,
@@ -32,7 +34,7 @@ export class UsuarioAddComponent implements OnInit {
     }
   }
 
-  listaTelefone(id: number) {
+  listaTelefone(id: Number) {
     this.userService.getTelefonesList(id).subscribe((resposta: any) => {
       this.listasTelefones = resposta;
     });
@@ -63,7 +65,27 @@ export class UsuarioAddComponent implements OnInit {
     }
   }
 
+  adicionarTelefone() {
+    if (this.usuario.telefones === undefined) {
+      this.usuario.telefones = new Array<Telefone>();
+    }
+    this.usuario.telefones.push(this.telefone);
+    this.telefone = new Telefone();
+  }
+
   novo() {
     this.usuario = new User();
+    this.telefone = new Telefone();
+  }
+
+  deleteTelefone(id: Number) {
+    if (confirm('Deseja mesmo remover?')) {
+      this.userService.deletarTelefone(id).subscribe((resposta: any) => {
+        console.log('Retorno do método delete : ' + resposta);
+        this.listaTelefone(this.usuario.id);
+      });
+    } else {
+      alert('Operação cancelada');
+    }
   }
 }

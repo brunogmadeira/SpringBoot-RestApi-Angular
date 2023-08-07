@@ -197,8 +197,9 @@ public class IndexController {
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 	
-	@DeleteMapping(value = "/deleteTelofone/{id}", produces = "application/json")
+	@DeleteMapping(value = "/deleteTelefone/{id}", produces = "application/json")
 	public ResponseEntity<?> deleteTelefone(@PathVariable("id") Long id) {
+		System.out.println("CAIUAQUI");
 		telefoneRp.deleteById(id);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}

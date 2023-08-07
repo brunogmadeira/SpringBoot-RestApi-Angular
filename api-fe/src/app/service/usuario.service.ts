@@ -14,7 +14,7 @@ export class UsuarioService {
     return this.http.get<any>(AppConstants.baseUrl);
   }
 
-  getTelefonesList(id: number): Observable<any> {
+  getTelefonesList(id: Number): Observable<any> {
     return this.http.get<any>(AppConstants.baseUrl + 'telefones/id/' + id);
   }
 
@@ -27,6 +27,13 @@ export class UsuarioService {
       responseType: 'text',
     });
   }
+
+  deletarTelefone(id: Number): Observable<any> {
+    return this.http.delete(AppConstants.baseUrl + 'deleteTelefone/' + id, {
+      responseType: 'text',
+    });
+  }
+
   consultarUser(busca: String): Observable<any> {
     return this.http.get(AppConstants.baseUrl + 'usuarioBusca/' + busca);
   }
