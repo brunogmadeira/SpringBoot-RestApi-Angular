@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, ObservedValuesFromArray } from 'rxjs';
 import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
-import { User } from 'src/app/model/user';
+import { User } from 'src/app/model/User';
 import { UsuarioService } from 'src/app/service/usuario.service';
 
 @Component({

@@ -39,7 +39,6 @@ public class Usuario implements UserDetails {
 	
 	@Column(length = 100, unique = true)
 	private String login;
-	
 	private String senha;	
 	private String token = "";
 	private String nome;

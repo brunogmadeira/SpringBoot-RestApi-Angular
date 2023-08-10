@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UsuarioService } from 'src/app/service/usuario.service';
-import { User } from 'src/app/model/user';
+import { User } from 'src/app/model/User';
 import { Telefone } from 'src/app/model/telefone';
 import { identifierName } from '@angular/compiler';
 
@@ -65,14 +65,6 @@ export class UsuarioAddComponent implements OnInit {
     }
   }
 
-  adicionarTelefone() {
-    if (this.usuario.telefones === undefined) {
-      this.usuario.telefones = new Array<Telefone>();
-    }
-    this.usuario.telefones.push(this.telefone);
-    this.telefone = new Telefone();
-  }
-
   novo() {
     this.usuario = new User();
     this.telefone = new Telefone();
@@ -87,5 +79,24 @@ export class UsuarioAddComponent implements OnInit {
     } else {
       alert('Operação cancelada');
     }
+  }
+
+  adicionarTelefone() {
+    this.userService
+      .cadastrarTelefone(this.telefone.numero, this.usuario.id)
+      .subscribe((resposta: any) => {
+        this.novo;
+        console.info('Gravou user:' + resposta);
+        this.listaTelefone(this.usuario.id);
+      });
+  }
+
+  addtelAlex() {
+    if (this.usuario.telefones === undefined) {
+      this.usuario.telefones = new Array<Telefone>();
+    }
+
+    this.usuario.telefones.push(this.telefone);
+    this.telefone = new Telefone();
   }
 }

@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppConstants } from '../app-constants';
-import { User } from '../model/user';
+import { User } from '../model/User';
+import { Telefone } from '../model/telefone';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,13 @@ export class UsuarioService {
     return this.http.delete(AppConstants.baseUrl + 'deleteTelefone/' + id, {
       responseType: 'text',
     });
+  }
+
+  cadastrarTelefone(numero: String, id: Number): Observable<any> {
+    return this.http.post<any>(
+      AppConstants.baseUrl + 'telefoneadd/' + numero + '/iduser/' + id,
+      null
+    );
   }
 
   consultarUser(busca: String): Observable<any> {

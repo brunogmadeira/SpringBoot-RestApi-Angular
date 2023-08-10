@@ -82,6 +82,7 @@ public class IndexController {
 		return new ResponseEntity<List<Telefone>>(list, HttpStatus.OK);
 	}
 
+
 	// Consulta todos os users
 	@GetMapping(value = "/pagina/{pagina}", produces = "application/json")
 	@CacheEvict(value = "cacheusuarios", allEntries = true)
@@ -166,6 +167,37 @@ public class IndexController {
 		return new ResponseEntity<Usuario>(usuariosalvo, HttpStatus.OK);
 	}
 	
+	/*@PostMapping(value="/telefoneadd/iduser/{id}", produces = "application/json")
+	public ResponseEntity<Usuario> cadastrartelefone(@PathVariable("id") Long id, @RequestBody Telefone telefone){
+		System.out.println(telefone.getNumero());
+		try {
+			Usuario usuario = usuarioRp.findById(id).get();
+			usuario.getListTelefones().add(telefone);
+			return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<Usuario>(HttpStatus.FORBIDDEN);
+		}
+		
+	}*/
+	@PostMapping(value = "/telefoneadd/{numero}/iduser/{id}", produces = "application/json")
+	public ResponseEntity<Telefone> cadastrartelefone(@PathVariable("numero") String numero, @PathVariable("id") Long id) {
+	    System.out.println(numero);
+	    Usuario usuario = usuarioRp.findById(id).get();
+	    System.out.println((usuario.getId()));
+	    
+	    Telefone telefone = new Telefone();
+	    telefone.setNumero(numero);
+	    telefone.setUsuario(usuario);
+	    
+	    telefoneRp.save(telefone);
+
+	    return new ResponseEntity<Telefone>(telefone, HttpStatus.OK);
+	}
+
+	
+	
 	// METODO PUT #################################################################################
 	
 	@PutMapping(value = "/", produces = "application/json")
@@ -199,7 +231,6 @@ public class IndexController {
 	
 	@DeleteMapping(value = "/deleteTelefone/{id}", produces = "application/json")
 	public ResponseEntity<?> deleteTelefone(@PathVariable("id") Long id) {
-		System.out.println("CAIUAQUI");
 		telefoneRp.deleteById(id);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
