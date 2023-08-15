@@ -30,7 +30,11 @@
     <th></th>
   </thead>
   <tbody>
-    <tr *ngFor="let student of students">
+    <tr
+      *ngFor="
+        let student of students | paginate : { itemsPerPage: 5, currentPage: p }
+      "
+    >
       <td>{{ student.id }}</td>
       <td>{{ student.nome }}</td>
       <td>{{ student.cpf }}</td>

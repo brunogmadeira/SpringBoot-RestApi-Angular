@@ -11,6 +11,8 @@ import { UsuarioComponent } from './components/usuario/usuario.component';
 import { UsuarioAddComponent } from './components/usuario/usuario-add/usuario-add.component';
 import { GuardiaoGuard } from './service/guardiao.guard';
 import { Telefone } from './model/telefone';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 export const appRouters: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [GuardiaoGuard] },
@@ -21,6 +23,7 @@ export const appRouters: Routes = [
     component: UsuarioComponent,
     canActivate: [GuardiaoGuard],
   },
+
   {
     path: 'usuarioAdd',
     component: UsuarioAddComponent,
@@ -32,6 +35,8 @@ export const appRouters: Routes = [
     canActivate: [GuardiaoGuard],
   },
 ];
+
+export const optionsMask: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 export const routes: ModuleWithProviders<any> =
   RouterModule.forRoot(appRouters);
@@ -50,6 +55,8 @@ export const routes: ModuleWithProviders<any> =
     HttpClientModule,
     routes,
     HttpInterceptorMoodule,
+    NgxMaskModule.forRoot(optionsMask),
+    NgxPaginationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

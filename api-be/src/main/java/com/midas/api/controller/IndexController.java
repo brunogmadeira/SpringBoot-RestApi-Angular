@@ -183,9 +183,7 @@ public class IndexController {
 	}*/
 	@PostMapping(value = "/telefoneadd/{numero}/iduser/{id}", produces = "application/json")
 	public ResponseEntity<Telefone> cadastrartelefone(@PathVariable("numero") String numero, @PathVariable("id") Long id) {
-	    System.out.println(numero);
 	    Usuario usuario = usuarioRp.findById(id).get();
-	    System.out.println((usuario.getId()));
 	    
 	    Telefone telefone = new Telefone();
 	    telefone.setNumero(numero);
