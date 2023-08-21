@@ -7,6 +7,7 @@ export class User {
   senha!: String;
   cpf!: String;
   bairro!: String;
+  localidade!: String;
 
   telefones!: Array<Telefone>;
 }

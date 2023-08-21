@@ -1,7 +1,7 @@
-<h3 style="padding: 10px">Tela de usuario</h3>
-<form style="padding: 10px" #formValidate="ngForm">
+<form class="mx-sm-3" #formValidate="ngForm">
+  <h3>Dados do Usuario</h3>
   <div class="form-row">
-    <div class="form group col-md-12">
+    <div class="form group col-md-3">
       <label for="id">Id</label>
       <input
         type="text"
@@ -13,28 +13,7 @@
         autocomplete="false"
       />
     </div>
-  </div>
-
-  <div class="form-row">
-    <div class="form-group col-md-12">
-      <label for="nome">Nome</label>
-      <span style="color: red; font-size: 23px" *ngIf="nomeValidate.invalid"
-        >*</span
-      >
-      <input
-        type="text"
-        [(ngModel)]="usuario.nome"
-        #nomeValidate="ngModel"
-        class="form-control"
-        id="nome"
-        required="true"
-        name="nome"
-        autocomplete="false"
-      />
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
       <label for="login">Email ou Login</label>
       <span style="color: red; font-size: 23px" *ngIf="loginValidate.invalid"
         >*</span
@@ -50,8 +29,7 @@
         autocomplete="false"
       />
     </div>
-
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-5">
       <label for="login">Senha</label>
       <span style="color: red; font-size: 23px" *ngIf="senhaValidate.invalid"
         >*</span
@@ -69,7 +47,23 @@
     </div>
   </div>
   <div class="form-row">
-    <div class="form-grop col-md-3">
+    <div class="form-group col-md-3">
+      <label for="nome">Nome</label>
+      <span style="color: red; font-size: 23px" *ngIf="nomeValidate.invalid"
+        >*</span
+      >
+      <input
+        type="text"
+        [(ngModel)]="usuario.bairro"
+        #nomeValidate="ngModel"
+        class="form-control"
+        id="bairro"
+        name="bairro"
+        autocomplete="false"
+      />
+    </div>
+
+    <div class="form-grop col-md-4">
       <label for="cpf">CPF</label>
       <span style="color: red; font-size: 23px" *ngIf="cpfValidate.invalid"
         >*</span
@@ -87,6 +81,34 @@
       />
     </div>
   </div>
+  <br />
+  <h3>Endereço</h3>
+  <br />
+  <div class="form-row">
+    <div class="form group col-md-3">
+      <label for="bairro">Bairro</label>
+      <input
+        type="text"
+        [(ngModel)]="usuario.bairro"
+        class="form-control"
+        id="bairro"
+        name="bairo"
+        autocomplete="false"
+      />
+    </div>
+    <div class="form group col-md-3">
+      <label for="localidade">Localidade</label>
+      <input
+        type="text"
+        [(ngModel)]="usuario.localidade"
+        class="form-control"
+        id="localidade"
+        name="localidade"
+        autocomplete="false"
+      />
+    </div>
+  </div>
+
   <br />
   <div class="card text-center">
     <div class="card-hedader">Telefone Contato</div>

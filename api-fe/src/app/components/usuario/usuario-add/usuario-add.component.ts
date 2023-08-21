@@ -14,6 +14,8 @@ export class UsuarioAddComponent implements OnInit {
   usuario = new User();
   listasTelefones: Array<Telefone> = [];
   telefone = new Telefone();
+  currentPage!: number;
+  totalItems!: number;
 
   constructor(
     private routeActive: ActivatedRoute,
