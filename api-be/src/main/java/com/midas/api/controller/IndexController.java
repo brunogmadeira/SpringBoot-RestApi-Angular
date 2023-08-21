@@ -1,17 +1,10 @@
 package com.midas.api.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
 import com.midas.api.model.Telefone;
 import com.midas.api.model.Usuario;
 import com.midas.api.repository.TelefoneRepository;
@@ -83,6 +75,16 @@ public ResponseEntity<Page<Usuario>> usuario() throws InterruptedException {
 		return new ResponseEntity<List<Telefone>>(list, HttpStatus.OK);
 	}
 
+	@GetMapping(value = "/telefone/{pagina}", produces = "application/json")
+	public ResponseEntity<Page<Telefone>> telefonePagina(@PathVariable("pagina") int pagina) throws InterruptedException {
+		
+		Pageable pageable = PageRequest.of(pagina, 5, Sort.by("nome"));
+		
+		Page<Telefone> list = telefoneRp.findAll(pageable);
+			
+		
+		return new ResponseEntity<Page<Telefone>>(list, HttpStatus.OK);
+	}
 
 	@GetMapping(value = "/pagina/{pagina}", produces = "application/json")
 	@CacheEvict(value = "cacheusuarios", allEntries = true)
