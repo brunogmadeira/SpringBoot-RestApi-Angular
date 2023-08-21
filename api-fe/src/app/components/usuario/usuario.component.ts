@@ -10,31 +10,43 @@ import { UsuarioService } from 'src/app/service/usuario.service';
   styleUrls: ['./usuario.component.css'],
 })
 export class UsuarioComponent implements OnInit {
-  students: Array<User> = [];
+  students!: Array<User>;
   busca!: String;
+  currentPage!: number;
+  totalItems!: number;
+  total!: Number;
 
   constructor(private usuarioService: UsuarioService) {}
 
   ngOnInit() {
-    this.listaUsuarios();
+    this.listar(1);
   }
 
   deleteUsuario(id: Number) {
     if (confirm('Deseja mesmo remover?')) {
       this.usuarioService.deletarUsuario(id).subscribe((resposta) => {
         console.log('Retorno do método delete : ' + resposta);
-        this.listaUsuarios();
+        this.listar(this.currentPage);
       });
     }
   }
-  listaUsuarios() {
-    this.usuarioService.getStudentList().subscribe((resposta: any) => {
-      this.students = resposta;
-    });
-  }
+
   consultarUser() {
     this.usuarioService.consultarUser(this.busca).subscribe((resposta: any) => {
       this.students = resposta;
     });
   }
+  listar(pagina: number) {
+    this.usuarioService
+      .getUsuarioPagina(pagina - 1)
+      .subscribe((resposta: any) => {
+        this.students = resposta.content;
+        this.totalItems = resposta.totalElements;
+        this.currentPage = pagina;
+      });
+  }
+
+  /*   carregarPagina(currentPage) {
+    console.info('Pagnina ->' + pagina);
+  } */
 }

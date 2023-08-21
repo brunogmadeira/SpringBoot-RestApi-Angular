@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'api-fe';
+  public paginaatual = 1;
   constructor(private router: Router) {}
   ngOnInit(): void {
     if (localStorage.getItem('token') == null) {
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
     }
   }
   public sair() {
-    localStorage.clear;
+    localStorage.clear();
     this.router.navigate(['login']);
   }
   public esconderBarra() {

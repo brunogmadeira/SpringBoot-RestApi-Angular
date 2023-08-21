@@ -66,12 +66,13 @@ public class IndexController {
 	@GetMapping(value = "/", produces = "application/json")
 	//@CacheEvict(value = "cacheusuarios", allEntries = true)
 	@CachePut("cacheusuarios")
-	public ResponseEntity<List<Usuario>> usuario() throws InterruptedException {
+public ResponseEntity<Page<Usuario>> usuario() throws InterruptedException {
 		
-		List<Usuario> list = usuarioRp.findAll();
+		Pageable pageable = PageRequest.of(0, 5, Sort.by("nome"));
 		
-			
-		return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
+		Page<Usuario> list = usuarioRp.findAll(pageable);
+		
+		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
 	}
 	
 	//Consulta todos os users
@@ -83,7 +84,6 @@ public class IndexController {
 	}
 
 
-	// Consulta todos os users
 	@GetMapping(value = "/pagina/{pagina}", produces = "application/json")
 	@CacheEvict(value = "cacheusuarios", allEntries = true)
 	@CachePut("cacheusuarios")
@@ -93,6 +93,7 @@ public class IndexController {
 		
 		Page<Usuario> list = usuarioRp.findAll(pageable);
 			
+		
 		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
 	}
 	
@@ -100,10 +101,9 @@ public class IndexController {
 	@GetMapping(value = "/usuarioBusca/{busca}", produces = "application/json")
 	@CacheEvict(value = "cacheusuarios", allEntries = true)
 	@CachePut("cacheusuarios")
-	public ResponseEntity<List<Usuario>> consultarUser(@PathVariable("busca") String busca) throws InterruptedException {
-		List<Usuario> list = usuarioRp.findUserByBusca(busca);
-		return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
-		/*Page<Usuario> list = null;
+	public ResponseEntity<Page<Usuario>> usuarioNome(@PathVariable("busca") String busca) throws InterruptedException {
+		
+		Page<Usuario> list = null;
 		Pageable pageable = null;
 		busca = CaracterUtil.buscaContexto(busca);
 		if (busca.equals("")) {
@@ -114,8 +114,8 @@ public class IndexController {
 			list = usuarioRp.findUserByBuscaPage(busca, pageable);
 		}
 		
+	
 		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
-		*/
 	}
 	
 	

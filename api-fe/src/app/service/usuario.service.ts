@@ -22,6 +22,9 @@ export class UsuarioService {
   getStudent(id: Number): Observable<any> {
     return this.http.get<any>(AppConstants.baseUrl + id);
   }
+  getUsuarioPagina(pagina: Number): Observable<User> {
+    return this.http.get<User>(`${AppConstants.baseUrl}pagina/${pagina}`);
+  }
 
   deletarUsuario(id: Number): Observable<any> {
     return this.http.delete(AppConstants.baseUrl + id, {
