@@ -121,6 +121,25 @@ public ResponseEntity<Page<Usuario>> usuario() throws InterruptedException {
 	}
 	
 	
+	@GetMapping(value = "/usuarioPorNome/{nome}/page/{page}", produces = "application/json")
+	@CachePut("cacheusuarios")
+	public ResponseEntity<Page<Usuario>> usuarioPorNomePage (@PathVariable("nome") String nome, @PathVariable("page") int page) throws InterruptedException{
+		
+		
+		PageRequest pageRequest = null;
+		Page<Usuario> list = null;
+		
+		if (nome == null || (nome != null && nome.trim().isEmpty())
+				|| nome.equalsIgnoreCase("undefined")) {/*Não informou nome*/
+			
+			pageRequest = PageRequest.of(page, 5, Sort.by("nome"));
+			list =  usuarioRp.findAll(pageRequest);
+		}	
+				
+		
+		
+		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
+	}
 	
 	// METODO POST ################################################################################
 	
