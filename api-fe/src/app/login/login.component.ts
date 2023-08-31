@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LoginServiceService } from '../service/login.service';
 import { Router } from '@angular/router';
 
@@ -9,14 +9,24 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   usuario = { login: '', senha: '' };
+  ngAfterViewInit() {
+    this.emaillogin.nativeElement.focus();
+  }
 
   constructor(
     private loginservice: LoginServiceService,
     private router: Router
   ) {}
 
+  @ViewChild('passwordInput', { read: ElementRef }) passwordInput!: ElementRef;
+  @ViewChild('emaillogin') emaillogin!: ElementRef;
+
   public login() {
     this.loginservice.login(this.usuario);
+  }
+
+  foconasenha() {
+    this.passwordInput.nativeElement.focus();
   }
 
   ngOnInit(): void {
@@ -25,6 +35,15 @@ export class LoginComponent implements OnInit {
       localStorage.getItem('token')?.toString().trim() !== null
     ) {
       this.router.navigate(['home']);
+    }
+  }
+
+  checkEnter(event: KeyboardEvent): void {
+    if (
+      event.key === 'Enter' &&
+      document.activeElement === this.passwordInput.nativeElement
+    ) {
+      this.login();
     }
   }
 }

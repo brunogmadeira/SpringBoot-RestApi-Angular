@@ -1,6 +1,7 @@
 package com.midas.api.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -45,26 +46,14 @@ public class IndexController {
 	
 	// METODO GET #################################################################################
 	
-	// Serviço restfull - consultar ID
+	/* Serviço RESTful */
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<Usuario> init(@PathVariable(value="id") Long id) {
+	@CachePut("cacheuser")
+	public ResponseEntity<Usuario> init(@PathVariable (value = "id") Long id) {
 		
-		Usuario usuario = usuarioRp.findById(id).get();
+		Optional<Usuario> usuario = usuarioRp.findById(id);
 		
-		return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
-	}
-	
-	//Consulta todos os users
-	@GetMapping(value = "/", produces = "application/json")
-	//@CacheEvict(value = "cacheusuarios", allEntries = true)
-	@CachePut("cacheusuarios")
-public ResponseEntity<Page<Usuario>> usuario() throws InterruptedException {
-		
-		Pageable pageable = PageRequest.of(0, 5, Sort.by("nome"));
-		
-		Page<Usuario> list = usuarioRp.findAll(pageable);
-		
-		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
+		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
 	}
 	
 	//Consulta todos os users
@@ -123,23 +112,40 @@ public ResponseEntity<Page<Usuario>> usuario() throws InterruptedException {
 	
 	@GetMapping(value = "/usuarioPorNome/{nome}/page/{page}", produces = "application/json")
 	@CachePut("cacheusuarios")
-	public ResponseEntity<Page<Usuario>> usuarioPorNomePage (@PathVariable("nome") String nome, @PathVariable("page") int page) throws InterruptedException{
+	public ResponseEntity<Page<Usuario>> usuarioPorNomePage (@PathVariable("nome") String nome, @PathVariable("page") int page) throws InterruptedException{				
+		PageRequest pageRequest = null;
+		Page<Usuario> list = null;	
+		if (nome == null || (nome != null && nome.trim().isEmpty())
+				|| nome.equalsIgnoreCase("undefined")) {	
+			pageRequest = PageRequest.of(page, 5, Sort.by("nome"));
+			list =  usuarioRp.findAll(pageRequest);
+		}							
+		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/usuarioPorNome/{nome}", produces = "application/json")
+	@CachePut("cacheusuarios")
+	public ResponseEntity<Page<Usuario>> usuarioPorNome (@PathVariable("nome") String nome) throws InterruptedException{
 		
 		
 		PageRequest pageRequest = null;
 		Page<Usuario> list = null;
 		
 		if (nome == null || (nome != null && nome.trim().isEmpty())
-				|| nome.equalsIgnoreCase("undefined")) {/*Não informou nome*/
+				|| nome.equalsIgnoreCase("undefined")) {
 			
-			pageRequest = PageRequest.of(page, 5, Sort.by("nome"));
+			pageRequest = PageRequest.of(0, 5, Sort.by("nome"));
 			list =  usuarioRp.findAll(pageRequest);
-		}	
+		}else {
+			pageRequest = PageRequest.of(0, 5, Sort.by("nome"));
+			list = usuarioRp.findUserByNamePage(nome, pageRequest);
+		}		
 				
 		
 		
 		return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
 	}
+	
 	
 	// METODO POST ################################################################################
 	
@@ -188,20 +194,6 @@ public ResponseEntity<Page<Usuario>> usuario() throws InterruptedException {
 		return new ResponseEntity<Usuario>(usuariosalvo, HttpStatus.OK);
 	}
 	
-	/*@PostMapping(value="/telefoneadd/iduser/{id}", produces = "application/json")
-	public ResponseEntity<Usuario> cadastrartelefone(@PathVariable("id") Long id, @RequestBody Telefone telefone){
-		System.out.println(telefone.getNumero());
-		try {
-			Usuario usuario = usuarioRp.findById(id).get();
-			usuario.getListTelefones().add(telefone);
-			return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ResponseEntity<Usuario>(HttpStatus.FORBIDDEN);
-		}
-		
-	}*/
 	@PostMapping(value = "/telefoneadd/{numero}/iduser/{id}", produces = "application/json")
 	public ResponseEntity<Telefone> cadastrartelefone(@PathVariable("numero") String numero, @PathVariable("id") Long id) {
 	    Usuario usuario = usuarioRp.findById(id).get();

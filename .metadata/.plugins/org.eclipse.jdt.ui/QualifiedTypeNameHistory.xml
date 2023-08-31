@@ -23,4 +23,8 @@
     <fullyQualifiedTypeName name="com.midas.api.model.Telefone"/>
     <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.JpaRepository"/>
     <fullyQualifiedTypeName name="com.midas.api.repository.UsuarioRepository"/>
+    <fullyQualifiedTypeName name="org.springframework.data.domain.ExampleMatcher"/>
+    <fullyQualifiedTypeName name="org.springframework.data.domain.Example"/>
+    <fullyQualifiedTypeName name="net.bytebuddy.dynamic.DynamicType.Builder.FieldDefinition.Optional"/>
+    <fullyQualifiedTypeName name="java.util.Optional"/>
 </qualifiedTypeNameHistroy>

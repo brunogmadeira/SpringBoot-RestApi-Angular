@@ -1,48 +1,59 @@
-<form id="tela-login">
-  <div class="form-group">
-    <h3>Login do Sistema</h3>
-  </div>
+<div class="container">
+  <div class="login-block">
+    <div class="block block-transparent fundo-login login">
+      <div class="content controls npt block-fill-white">
+        <form id="tela-login">
+          <div class="form-group">
+            <h3>Login do Sistema</h3>
+          </div>
 
-  <div class="form-group">
-    <label for="login">Emaila</label>
-    <input
-      type="email"
-      class="form-control"
-      #email="ngModel"
-      [(ngModel)]="usuario.login"
-      id="login"
-      name="login"
-      placeholder="Informe o Login"
-      required
-    />
-  </div>
-  <div *ngIf="email.invalid" class="alert alert-danger">
-    Login deve ser informado
-  </div>
+          <div class="form-group">
+            <label for="login">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              #email="ngModel"
+              [(ngModel)]="usuario.login"
+              id="login"
+              name="login"
+              placeholder="Informe o Login"
+              (keyup.enter)="foconasenha()"
+              required
+            />
+          </div>
+          <div *ngIf="email.invalid" class="alert alert-danger">
+            Login deve ser informado
+          </div>
 
-  <div class="form-group">
-    <label for="senha">senha</label>
-    <input
-      type="password"
-      class="form-control"
-      [(ngModel)]="usuario.senha"
-      id="senha"
-      name="senha"
-      placeholder="Informe a senha"
-      required
-    />
+          <div class="form-group">
+            <label for="senha">senha</label>
+            <input
+              type="password"
+              class="form-control"
+              [(ngModel)]="usuario.senha"
+              id="senha"
+              name="senha"
+              #passwordInput
+              (keydown)="checkEnter($event)"
+              placeholder="Informe a senha"
+              required
+            />
+          </div>
+          <div *ngIf="email.invalid" class="alert alert-danger">
+            Senha deve ser informado
+          </div>
+          <div>
+            <button
+              type="button"
+              [disabled]="email.invalid // senha.invalid"
+              class="btn btn-primary"
+              (click)="login()"
+            >
+              acessar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-  <div *ngIf="email.invalid" class="alert alert-danger">
-    Senha deve ser informado
-  </div>
-  <div>
-    <button
-      type="button"
-      [disabled]="email.invalid // senha.invalid"
-      class="btn btn-primary"
-      (click)="login()"
-    >
-      acessar
-    </button>
-  </div>
-</form>
+</div>

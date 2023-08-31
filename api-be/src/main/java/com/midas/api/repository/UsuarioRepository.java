@@ -2,7 +2,10 @@ package com.midas.api.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -23,7 +26,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	//Usuario findUserById(Long id);
 	
 	@Query("SELECT u FROM Usuario u WHERE u.nome LIKE %?1%")
-	List<Usuario> findUserByBusca(String busca);
+	List<Usuario> findUserByBusca(String nome);
 	
 	@Query(value="INSERT INTO curso_apirest.usuarios_role (usuario_id, role_id) VALUES (2, (SELECT id FROM curso_apirest.role WHERE role = 'ROLE_USER'))", nativeQuery = true)
 	String consultaConstraintRole();
@@ -49,11 +52,30 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 		return null;
 		
 	}
-	
+	 
 	// UPDATE -------------------------------------------------------------------------------
 	@Transactional
 	@Modifying
 	@Query(nativeQuery = true, value = "UPDATE usuario SET token = ?1 WHERE login = ?2")
 	void atualizaTokenUsuario(String token, String login);
+
+	default Page<Usuario> findUserByNamePage(String nome, PageRequest pageRequest) {
+		
+		Usuario usuario = new Usuario();
+		usuario.setNome(nome);
+		
+		/*Configurando para pesquisar por nome e paginação*/
+		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAny()
+				.withMatcher("nome", ExampleMatcher.GenericPropertyMatchers
+						.contains().ignoreCase());
+		
+		Example<Usuario> example = Example.of(usuario, exampleMatcher);
+		
+		Page<Usuario> retorno = findAll(example, pageRequest);
+		
+		return retorno;
+		
+	}
+
 }
 
