@@ -8,6 +8,7 @@ export class User {
   cpf!: String;
   bairro!: String;
   localidade!: String;
+  uf!: String;
 
   telefones!: Array<Telefone>;
 }

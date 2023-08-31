@@ -85,7 +85,7 @@
   <h3>Endereço</h3>
   <br />
   <div class="form-row">
-    <div class="form group col-md-3">
+    <div class="form group col-md-2">
       <label for="bairro">Bairro</label>
       <input
         type="text"
@@ -96,7 +96,7 @@
         autocomplete="false"
       />
     </div>
-    <div class="form group col-md-3">
+    <div class="form group col-md-2">
       <label for="localidade">Localidade</label>
       <input
         type="text"
@@ -104,6 +104,17 @@
         class="form-control"
         id="localidade"
         name="localidade"
+        autocomplete="false"
+      />
+    </div>
+    <div class="form group col-md-2">
+      <label for="Uf">UF</label>
+      <input
+        type="text"
+        [(ngModel)]="usuario.uf"
+        class="form-control"
+        id="Uf"
+        name="UF"
         autocomplete="false"
       />
     </div>
@@ -162,7 +173,7 @@
   <div class="form-row mt-3">
     <div class="form-group col-md-6">
       <button type="button" class="btn btn-danger" (click)="voltar()">
-        Voltar
+        voltar
       </button>
       <button type="button" class="btn btn-primary ml-1" (click)="novo()">
         Novo
